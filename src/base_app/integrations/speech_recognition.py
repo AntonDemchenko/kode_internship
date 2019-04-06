@@ -10,10 +10,10 @@ def make_request(audio: bytes) -> requests.Response:
             json={
                 "audio": {
                     "content": audio,
-                    "config": {
-                        "encoding": SPEECH_RECOGNITION["AUDIO_ENCODING"],
-                        "languageCode": SPEECH_RECOGNITION["LANGUAGE_CODE"]
-                    }
+                },
+                "config": {
+                    "encoding": SPEECH_RECOGNITION["AUDIO_ENCODING"],
+                    "languageCode": SPEECH_RECOGNITION["LANGUAGE_CODE"]
                 }
             },
             params={"key": SPEECH_RECOGNITION["GOOGLE_API_KEY"]}
@@ -27,7 +27,7 @@ def make_request(audio: bytes) -> requests.Response:
 def extract_text(response: requests.Response) -> str:
     try:
         json = response.json()
-        text = json["results"]["alternatives"][0]["transcript"]
+        text = json["results"][0]["alternatives"][0]["transcript"]
     except (ValueError, KeyError, IndexError):
         return None
     else:
