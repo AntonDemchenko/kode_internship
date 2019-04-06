@@ -24,9 +24,19 @@ def make_request(audio: bytes) -> requests.Response:
         return response
 
 
+def extract_text(response: requests.Response) -> str:
+    try:
+        json = response.json()
+        text = json["results"]["alternatives"][0]["transcript"]
+    except (ValueError, KeyError, IndexError):
+        return None
+    else:
+        return text
+
+
 def speech_to_text(audio: bytes) -> str:
     audio = base64.b64encode(audio)
     audio = audio.decode("ascii")
     response = make_request(audio)
-
-    return "Hello"
+    text = extract_text(response)
+    return text
