@@ -192,5 +192,6 @@ HOST_IP_ADDRESS = os.environ.get('HOST_IP_ADDRESS', '0.0.0.0')
 SPEECH_RECOGNITION = {
     "GOOGLE_API_KEY": os.environ.get("GOOGLE_API_KEY"),
     "AUDIO_ENCODING": "FLAC",
-    "LANGUAGE_CODE": "en-US"
+    "LANGUAGE_CODE": "en-US",
+    "FILE_MAX_SIZE": 10485760
 }
