@@ -1,5 +1,7 @@
 import base64
+import logging
 import requests
+
 from settings import SPEECH_RECOGNITION
 
 
@@ -18,7 +20,8 @@ def make_request(audio: bytes) -> requests.Response:
             },
             params={"key": SPEECH_RECOGNITION["GOOGLE_API_KEY"]}
         )
-    except requests.exceptions.RequestException:
+    except requests.exceptions.RequestException as err:
+        logging.critical(repr(err))
         return None
     else:
         return response
