@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -188,3 +188,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/var/static'
 
 HOST_IP_ADDRESS = os.environ.get('HOST_IP_ADDRESS', '0.0.0.0')
+
+SPEECH_RECOGNITION = {
+    "GOOGLE_API_KEY": os.environ.get("GOOGLE_API_KEY"),
+    "AUDIO_ENCODING": "FLAC",
+    "LANGUAGE_CODE": "en-US",
+    "FILE_MAX_SIZE": 10485760
+}
