@@ -18,7 +18,13 @@ class SpeechRecognition(Json):
                 code=400
             )
         audio = audio.read()
-        text = speech_to_text(audio)
+        try:
+            text = speech_to_text(audio)
+        except RuntimeError:
+            raise rmr.ServerError(
+                "Something went wrong. Please try again later.",
+                code=500
+            )
         if not text:
             raise rmr.ClientError(
                 "Unable to recognize speech. "

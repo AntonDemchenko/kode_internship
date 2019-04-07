@@ -41,5 +41,7 @@ def speech_to_text(audio: bytes) -> str:
     audio = base64.b64encode(audio)
     audio = audio.decode("ascii")
     response = make_request(audio)
+    if not response:
+        raise RuntimeError
     text = extract_text(response)
     return text
