@@ -33,7 +33,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -73,10 +72,17 @@ WSGI_APPLICATION = 'wsgi.application'
 
 CACHE_DEFAULT_TIMEOUT = 60
 
+REDIS_HOST = os.environ.get('REDIS_HOST', '0.0.0.0')
+REDIS_PORT = int(os.environ.get('REDIS_HOST', '6379'))
+REDIS_DB = 1
+
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-def',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
     },
 }
 

@@ -7,3 +7,9 @@ services:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: 'postgres'
+
+  redis:
+    image: redis:latest
+    restart: on-failure
+    ports:
+      - '6379:6379'
