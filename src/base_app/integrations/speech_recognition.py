@@ -2,23 +2,23 @@ import base64
 import logging
 import requests
 
-from settings import SPEECH_RECOGNITION
+from django.conf import settings
 
 
 def make_request(audio: bytes) -> requests.Response:
     try:
         response = requests.post(
-            "https://speech.googleapis.com/v1/speech:recognize",
+            settings.SPEECH_RECOGNITION["GOOGLE_API_URL"],
             json={
                 "audio": {
                     "content": audio,
                 },
                 "config": {
-                    "encoding": SPEECH_RECOGNITION["AUDIO_ENCODING"],
-                    "languageCode": SPEECH_RECOGNITION["LANGUAGE_CODE"]
+                    "encoding": settings.SPEECH_RECOGNITION["AUDIO_ENCODING"],
+                    "languageCode": settings.SPEECH_RECOGNITION["LANGUAGE_CODE"]
                 }
             },
-            params={"key": SPEECH_RECOGNITION["GOOGLE_API_KEY"]}
+            params={"key": settings.SPEECH_RECOGNITION["GOOGLE_API_KEY"]}
         )
     except requests.exceptions.RequestException as err:
         logging.critical(repr(err))
