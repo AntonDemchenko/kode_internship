@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '96ca&lyuapikc9uo(5^1vky@ixt5tazc5y#07jncgqqjdo8+ia'
 
-DEBUG = bool(os.environ.get('DEBUG', 0))
+DEBUG = bool(os.environ.get('DEBUG', 1))
 
 ALLOWED_HOSTS = [
     '*',
@@ -24,7 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'base_app',
+    'api'
 ]
 
 MIDDLEWARE = [
