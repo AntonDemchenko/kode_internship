@@ -6,7 +6,7 @@ from django.conf import settings
 
 
 class SpeechRecognition(APIView):
-    MAX_SIZE = settings.SPEECH["FILE_MAX_SIZE"]
+    MAX_SIZE = settings.SPEECH["MAX_SIZE"]
 
     @staticmethod
     def error(message, status_code):
@@ -24,7 +24,7 @@ class SpeechRecognition(APIView):
         if audio.size > self.MAX_SIZE:
             return self.error(
                 "Please provide smaller file. "
-                "Maximal possible size is {} byte(s)".format(self.MAX_SIZE),
+                "Maximal possible size is {} byte(s).".format(self.MAX_SIZE),
                 400
             )
 

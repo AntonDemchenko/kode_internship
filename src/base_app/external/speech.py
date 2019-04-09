@@ -20,7 +20,7 @@ def make_request(audio: bytes) -> Optional[requests.Response]:
                     "content": audio,
                 },
                 "config": {
-                    "encoding": settings.SPEECH["AUDIO_ENCODING"],
+                    "encoding": settings.SPEECH["ENCODING"],
                     "languageCode": settings.SPEECH["LANGUAGE_CODE"]
                 }
             },
