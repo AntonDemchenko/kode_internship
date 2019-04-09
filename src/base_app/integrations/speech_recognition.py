@@ -6,10 +6,13 @@ from django.conf import settings
 from typing import Optional
 
 
+GOOGLE_API_URL = "https://speech.googleapis.com/v1/speech:recognize"
+
+
 def make_request(audio: bytes) -> Optional[requests.Response]:
     try:
         response = requests.post(
-            settings.SPEECH_RECOGNITION["GOOGLE_API_URL"],
+            GOOGLE_API_URL,
             json={
                 "audio": {
                     "content": audio,
