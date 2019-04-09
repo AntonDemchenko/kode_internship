@@ -1,41 +1,48 @@
-import rmr
 from settings import SPEECH_RECOGNITION
 
-from base_app.utils.json import Json
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from base_app.integrations.speech_recognition import speech_to_text
 
 
-class SpeechRecognition(Json):
+class SpeechRecognition(APIView):
     max_size = SPEECH_RECOGNITION["FILE_MAX_SIZE"]
+
+    @staticmethod
+    def error(message, status_code):
+        return Response(
+            {"error": message},
+            status_code
+        )
 
     def post(self, request):
         audio = request.FILES.get("audio")
 
         if not audio:
-            raise rmr.ClientError("Please provide audio file.", code=400)
+            return self.error("Please provide audio file.", 400)
 
         if audio.size > self.max_size:
-            raise rmr.ClientError(
+            return self.error(
                 "Please provide smaller file. "
                 "Maximal possible size is {} byte(s)".format(self.max_size),
-                code=400
+                400
             )
 
         try:
             text = speech_to_text(audio)
         except RuntimeError:
-            raise rmr.ServerError(
+            return self.error(
                 "Something went wrong. Please try again later.",
-                code=500
+                500
             )
 
         if not text:
-            raise rmr.ClientError(
+            return self.error(
                 "Unable to recognize speech. "
                 "Please provide another audio file.",
-                code=400
+                400
             )
 
-        return {
+        return Response({
             "text": text
-        }
+        })
