@@ -46,6 +46,6 @@ def speech_to_text(audio: bytes) -> str:
     audio = audio.decode("ascii")
     response = make_request(audio)
     if response is None or 500 <= response.status_code < 600:
-        raise RuntimeError
+        raise RuntimeError("Recognizer internal error")
     text = extract_text(response)
     return text
