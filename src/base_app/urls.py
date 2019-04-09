@@ -1,8 +1,8 @@
-from django.conf.urls import url
+from django.urls import path
 
 from base_app import views
 
 urlpatterns = [
-    url('health', views.HeartBeatHealthCheck.as_view(), name='common_healthcheck'),
-    url('speech_recognition', views.SpeechRecognition.as_view())
+    path('health/', views.HeartBeatHealthCheck.as_view(), name='common_healthcheck'),
+    path('speech:recognize/', views.SpeechRecognition.as_view(), name="speech recognizer")
 ]

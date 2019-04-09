@@ -1,5 +1,5 @@
 from .healthcheck import HeartBeatHealthCheck
-from .speech_recognition import SpeechRecognition
+from .speech import SpeechRecognition
 
 __all__ = [
     'HeartBeatHealthCheck',
