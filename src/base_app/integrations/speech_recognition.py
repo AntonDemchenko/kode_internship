@@ -41,7 +41,7 @@ def extract_text(response: requests.Response) -> Optional[str]:
         return text
 
 
-def speech_to_text(audio: bytes) -> str:
+def speech_to_text(audio: bytes) -> Optional[str]:
     audio = base64.b64encode(audio)
     audio = audio.decode("ascii")
     response = make_request(audio)
