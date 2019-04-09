@@ -25,7 +25,7 @@ def make_request(audio: bytes) -> Optional[requests.Response]:
             params={"key": settings.SPEECH_RECOGNITION["GOOGLE_API_KEY"]}
         )
     except requests.exceptions.RequestException as err:
-        logging.critical(repr(err))
+        logging.critical(str(err))
         return None
     else:
         return response
