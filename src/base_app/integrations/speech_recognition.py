@@ -2,11 +2,13 @@ import base64
 import logging
 import requests
 
+import io
 from django.conf import settings
 from typing import Optional
 
 
 GOOGLE_API_URL = "https://speech.googleapis.com/v1/speech:recognize"
+CHUNK_SIZE = 256
 
 
 def make_request(audio: bytes) -> Optional[requests.Response]:
@@ -41,9 +43,20 @@ def extract_text(response: requests.Response) -> Optional[str]:
         return text
 
 
-def speech_to_text(audio: bytes) -> Optional[str]:
-    audio = base64.b64encode(audio)
-    audio = audio.decode("ascii")
+def convert_audio(audio: io.BytesIO) -> str:
+    data = b""
+    while True:
+        chunk = audio.read(CHUNK_SIZE)
+        if not chunk:
+            break
+        data += chunk
+    data = base64.b64encode(data)
+    data = data.decode("ascii")
+    return data
+
+
+def speech_to_text(audio: io.BytesIO) -> Optional[str]:
+    audio = convert_audio(audio)
     response = make_request(audio)
     if response is None or 500 <= response.status_code < 600:
         raise RuntimeError("Recognizer internal error")
