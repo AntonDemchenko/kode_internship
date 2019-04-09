@@ -3,9 +3,10 @@ import logging
 import requests
 
 from django.conf import settings
+from typing import Optional
 
 
-def make_request(audio: bytes) -> requests.Response:
+def make_request(audio: bytes) -> Optional[requests.Response]:
     try:
         response = requests.post(
             settings.SPEECH_RECOGNITION["GOOGLE_API_URL"],
@@ -27,7 +28,7 @@ def make_request(audio: bytes) -> requests.Response:
         return response
 
 
-def extract_text(response: requests.Response) -> str:
+def extract_text(response: requests.Response) -> Optional[str]:
     try:
         json = response.json()
         text = json["results"][0]["alternatives"][0]["transcript"]
