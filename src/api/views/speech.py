@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from mutagen.flac import FLAC
 from mutagen import MutagenError
 
-from base_app.external.speech import speech_to_text
+from api.external.speech import speech_to_text
 from django.conf import settings
 
 
