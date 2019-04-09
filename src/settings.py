@@ -193,4 +193,5 @@ SPEECH = {
     "ENCODING": "FLAC",
     "LANGUAGE_CODE": "en-US",
     "MAX_SIZE": 10485760,  # in bytes
+    "MAX_LENGTH": 15
 }

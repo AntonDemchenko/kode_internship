@@ -6,7 +6,6 @@ import io
 from django.conf import settings
 from typing import Optional
 
-
 GOOGLE_API_URL = "https://speech.googleapis.com/v1/speech:recognize"
 CHUNK_SIZE = 256
 
