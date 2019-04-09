@@ -33,30 +33,29 @@ class SpeechRecognition(APIView):
         audio = request.FILES.get("audio")
 
         if not audio:
-            return self.error("Please provide audio file.", 400)
+            return self.error("Missed audio file argument.", 400)
 
         if audio.size > self.MAX_SIZE:
             return self.error(
-                "Please provide smaller file. "
+                "Too big audio file. "
                 "Maximal possible size is {} byte(s).".format(self.MAX_SIZE),
                 400
             )
 
         flac = self.get_flac(audio)
         if not flac:
-            return self.error("Please provide audio file in FLAC encoding.", 400)
+            return self.error("Invalid encoding. Please provide audio file in FLAC encoding.", 400)
 
         if flac.info.length > self.MAX_LENGTH:
             return self.error(
-                "Please provide shorter audio file. "
+                "Too long audio file. "
                 "Maximal possible length is {} second(s).".format(self.MAX_LENGTH),
                 400
             )
 
         if flac.info.channels != 1:
             return self.error(
-                "Passed stereo file. "
-                "Please provide one channel audio file.",
+                "Passed stereo file but one channel file is required.",
                 400
             )
 
