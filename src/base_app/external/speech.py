@@ -1,8 +1,8 @@
 import base64
 import logging
 import requests
-
 import io
+
 from django.conf import settings
 from typing import Optional
 
@@ -20,11 +20,11 @@ def make_request(audio: bytes) -> Optional[requests.Response]:
                     "content": audio,
                 },
                 "config": {
-                    "encoding": settings.SPEECH_RECOGNITION["AUDIO_ENCODING"],
-                    "languageCode": settings.SPEECH_RECOGNITION["LANGUAGE_CODE"]
+                    "encoding": settings.SPEECH["AUDIO_ENCODING"],
+                    "languageCode": settings.SPEECH["LANGUAGE_CODE"]
                 }
             },
-            params={"key": settings.SPEECH_RECOGNITION["GOOGLE_API_KEY"]}
+            params={"key": settings.SPEECH["GOOGLE_API_KEY"]}
         )
     except requests.exceptions.RequestException as err:
         logging.critical(str(err))

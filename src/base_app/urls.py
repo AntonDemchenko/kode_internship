@@ -4,5 +4,5 @@ from base_app import views
 
 urlpatterns = [
     path('health/', views.HeartBeatHealthCheck.as_view(), name='common_healthcheck'),
-    path('speech_recognition/', views.SpeechRecognition.as_view())
+    path('speech:recognize/', views.SpeechRecognition.as_view(), name="speech recognizer")
 ]

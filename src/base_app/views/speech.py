@@ -1,12 +1,12 @@
-from settings import SPEECH_RECOGNITION
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from base_app.integrations.speech_recognition import speech_to_text
+
+from base_app.external.speech import speech_to_text
+from django.conf import settings
 
 
 class SpeechRecognition(APIView):
-    max_size = SPEECH_RECOGNITION["FILE_MAX_SIZE"]
+    MAX_SIZE = settings.SPEECH["FILE_MAX_SIZE"]
 
     @staticmethod
     def error(message, status_code):
@@ -21,10 +21,10 @@ class SpeechRecognition(APIView):
         if not audio:
             return self.error("Please provide audio file.", 400)
 
-        if audio.size > self.max_size:
+        if audio.size > self.MAX_SIZE:
             return self.error(
                 "Please provide smaller file. "
-                "Maximal possible size is {} byte(s)".format(self.max_size),
+                "Maximal possible size is {} byte(s)".format(self.MAX_SIZE),
                 400
             )
 
@@ -44,5 +44,5 @@ class SpeechRecognition(APIView):
             )
 
         return Response({
-            "text": text
+            "result": text
         })
