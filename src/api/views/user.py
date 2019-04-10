@@ -1,7 +1,6 @@
 import logging
 
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import generics
 
 from base_app.models import User
 from base_app.serializers import UserSerializer
@@ -9,16 +8,11 @@ from base_app.serializers import UserSerializer
 logger = logging.getLogger(__name__)
 
 
-class UserView(APIView):
-    def get(self, request) -> Response:
-        users_list = list(User.objects.all())
-        return Response(dict(
-            users=users_list
-        ))
+class UserList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-    def post(self, request) -> Response:
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+
+class UserDetail(generics.RetrieveDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
