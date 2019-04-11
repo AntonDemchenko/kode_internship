@@ -1,9 +1,10 @@
 from .credentials import CredentialsView
-from .user import UserView
+from .user import UserList, UserDetail
 from .speech import SpeechRecognition
 
 __all__ = [
-    'UserView',
+    'UserList',
+    'UserDetail',
     'CredentialsView',
     'SpeechRecognition'
 ]
