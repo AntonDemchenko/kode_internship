@@ -185,11 +185,3 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/var/static'
 
 HOST_IP_ADDRESS = os.environ.get('HOST_IP_ADDRESS', '0.0.0.0')
-
-SPEECH = {
-    "GOOGLE_API_KEY": os.environ.get("GOOGLE_API_KEY"),
-    "ENCODING": "FLAC",
-    "LANGUAGE_CODE": "en-US",
-    "MAX_SIZE": 10485760,  # in bytes
-    "MAX_LENGTH": 15
-}
