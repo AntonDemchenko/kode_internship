@@ -9,5 +9,6 @@ urlpatterns = [
     path('users', views.UserList.as_view(), name='user list'),
     path('users/<str:pk>', views.UserDetail.as_view(), name='user details'),
     path('creds', views.CredentialsView.as_view(), name='creds'),
-    path('login', TokenObtainPairView.as_view(), name='login')
+    path('login', TokenObtainPairView.as_view(), name='login'),
+    path('pubkey', views.PublicKeyView.as_view(), name='public key')
 ]
