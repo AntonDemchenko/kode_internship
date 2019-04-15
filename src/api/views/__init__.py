@@ -1,10 +1,10 @@
 from .credentials import CredentialsView
 from .user import UserList, UserDetail
-from .speech import SpeechRecognition
+from .auth import PublicKeyView
 
 __all__ = [
     'UserList',
     'UserDetail',
     'CredentialsView',
-    'SpeechRecognition'
+    'PublicKeyView'
 ]

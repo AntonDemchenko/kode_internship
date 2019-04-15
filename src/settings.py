@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-
+from datetime import timedelta
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -14,7 +14,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '96ca&lyuapikc9uo(5^1vky@ixt5tazc5y#07jncgqqjdo8+ia'
+SECRET_KEY = os.environ.get("SECRET_KEY", None)
+
+PUBLIC_KEY = os.environ.get("PUBLIC_KEY", None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 0))
@@ -93,6 +95,33 @@ CACHES = {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         },
     },
+}
+
+AUTH_USER_MODEL = 'base_app.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'RS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': PUBLIC_KEY,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'user_id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'JTI_CLAIM': 'jti',
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -185,11 +214,3 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/var/static'
 
 HOST_IP_ADDRESS = os.environ.get('HOST_IP_ADDRESS', '0.0.0.0')
-
-SPEECH = {
-    "GOOGLE_API_KEY": os.environ.get("GOOGLE_API_KEY"),
-    "ENCODING": "FLAC",
-    "LANGUAGE_CODE": "en-US",
-    "MAX_SIZE": 10485760,  # in bytes
-    "MAX_LENGTH": 15
-}
