@@ -12,6 +12,13 @@ class User(models.Model):
     email = models.CharField(max_length=128, default='')
     password = models.CharField(max_length=128, default='')
 
+    @classmethod
+    def create_user(cls, **kwargs):
+        user = User(**kwargs)
+        user.set_password(user.password)
+        user.save()
+        return user
+
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
 
