@@ -14,24 +14,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = """
------BEGIN RSA PRIVATE KEY-----
-MIIBPQIBAAJBAL1GZOUlgnT9UkIdCCDkOSYrtvvthtvZLJwno0gWfwODfoqS1v23
-grvD8VY5ZNy+BEpZHb5a3sJILhnXq7z5Qp0CAwEAAQJBAKUSsMocpaNsj4IzmbQ9
-9w2wUH11UgmJZdumwkQLwqiHVRCdCV8Y4WbM4EhCXTwcJZxAY2mY7nlwT7tbTj7c
-CAECIQDho1yh7vttMNwU2clFiEjDRfS+W/w5q5EiDMwaW3QWAQIhANa+auR8dkGJ
-I8izxG5KZ9q40wCyMgjoevrafwo778SdAiEAxMMufk/mlRtscApTB/2GZjLU8ENK
-ugew8h5yxfFGVAECIQCRdINk5qUXOPQjExj/d6im70AFHa5keEwstGkOnpCGxQIh
-AMz0OMIvk0AlJgqgkxs9g7gmdgcJ1qPqvMvWl9+jA2ac
------END RSA PRIVATE KEY-----
-"""
+SECRET_KEY = os.environ.get("SECRET_KEY", None)
 
-PUBLIC_KEY = """
------BEGIN PUBLIC KEY-----
-MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL1GZOUlgnT9UkIdCCDkOSYrtvvthtvZ
-LJwno0gWfwODfoqS1v23grvD8VY5ZNy+BEpZHb5a3sJILhnXq7z5Qp0CAwEAAQ==
------END PUBLIC KEY-----
-"""
+PUBLIC_KEY = os.environ.get("PUBLIC_KEY", None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 0))
