@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-
+from datetime import timedelta
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -14,7 +14,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '96ca&lyuapikc9uo(5^1vky@ixt5tazc5y#07jncgqqjdo8+ia'
+SECRET_KEY = """
+-----BEGIN RSA PRIVATE KEY-----
+MIIBPQIBAAJBAL1GZOUlgnT9UkIdCCDkOSYrtvvthtvZLJwno0gWfwODfoqS1v23
+grvD8VY5ZNy+BEpZHb5a3sJILhnXq7z5Qp0CAwEAAQJBAKUSsMocpaNsj4IzmbQ9
+9w2wUH11UgmJZdumwkQLwqiHVRCdCV8Y4WbM4EhCXTwcJZxAY2mY7nlwT7tbTj7c
+CAECIQDho1yh7vttMNwU2clFiEjDRfS+W/w5q5EiDMwaW3QWAQIhANa+auR8dkGJ
+I8izxG5KZ9q40wCyMgjoevrafwo778SdAiEAxMMufk/mlRtscApTB/2GZjLU8ENK
+ugew8h5yxfFGVAECIQCRdINk5qUXOPQjExj/d6im70AFHa5keEwstGkOnpCGxQIh
+AMz0OMIvk0AlJgqgkxs9g7gmdgcJ1qPqvMvWl9+jA2ac
+-----END RSA PRIVATE KEY-----
+"""
+
+PUBLIC_KEY = """
+-----BEGIN PUBLIC KEY-----
+MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAL1GZOUlgnT9UkIdCCDkOSYrtvvthtvZ
+LJwno0gWfwODfoqS1v23grvD8VY5ZNy+BEpZHb5a3sJILhnXq7z5Qp0CAwEAAQ==
+-----END PUBLIC KEY-----
+"""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 0))
@@ -93,6 +110,31 @@ CACHES = {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         },
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'RS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': PUBLIC_KEY,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'JTI_CLAIM': 'jti',
 }
 
 AUTH_PASSWORD_VALIDATORS = [
