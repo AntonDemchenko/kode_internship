@@ -10,6 +10,9 @@ class Subscription(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='outgoing_subs')
     target = models.ForeignKey(User, on_delete=models.CASCADE, related_name='incoming_subs')
 
+    class Meta:
+        unique_together = ('owner', 'target',)
+
     @classmethod
     def get_outgoing_subs(cls, user_id):
         return cls.objects.filter(owner__user_id=user_id).all()
