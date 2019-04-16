@@ -3,7 +3,7 @@ import logging
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from base_app.utils.redis import save_pwd, get_pwd
+from base_app.utils.redis import get_pwd, save_pwd
 
 logger = logging.getLogger(__name__)
 

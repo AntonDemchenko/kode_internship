@@ -1,6 +1,6 @@
-from .credentials import CredentialsView
-from .user import UserList, UserDetail
 from .auth import PublicKeyView
+from .credentials import CredentialsView
+from .user import UserDetail, UserList
 
 __all__ = [
     'UserList',

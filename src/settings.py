@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 from datetime import timedelta
+
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -14,9 +15,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", None)
+SECRET_KEY = os.environ.get('SECRET_KEY', None)
 
-PUBLIC_KEY = os.environ.get("PUBLIC_KEY", None)
+PUBLIC_KEY = os.environ.get('PUBLIC_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 0))
