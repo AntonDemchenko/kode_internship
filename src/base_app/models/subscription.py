@@ -14,9 +14,13 @@ class Subscription(models.Model):
         unique_together = ('owner', 'target',)
 
     @classmethod
-    def get_outgoing_subs(cls, user_id):
-        return cls.objects.filter(owner__user_id=user_id).all()
+    def get_outgoing(cls, owner_id):
+        return cls.objects.filter(owner__user_id=owner_id).all()
 
     @classmethod
-    def get_incoming_subs(cls, user_id):
-        return cls.objects.filter(target__user_id=user_id).all()
+    def get_incoming(cls, target_id):
+        return cls.objects.filter(target__user_id=target_id).all()
+
+    @classmethod
+    def get(cls, owner_id, target_id):
+        return cls.objects.get(owner__user_id=owner_id, target__user_id=target_id)
