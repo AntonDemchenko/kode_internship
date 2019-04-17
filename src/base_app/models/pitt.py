@@ -1,7 +1,8 @@
 import uuid
+
 from django.db import models
 
-from base_app.models import User
+from .user import User
 
 
 class Pitt(models.Model):

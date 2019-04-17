@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 from datetime import timedelta
+
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -14,9 +15,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", None)
+SECRET_KEY = os.environ.get('SECRET_KEY', None)
 
-PUBLIC_KEY = os.environ.get("PUBLIC_KEY", None)
+PUBLIC_KEY = os.environ.get('PUBLIC_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 0))
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_q',
     'rest_framework',
     'base_app',
     'api'
@@ -214,3 +216,16 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/var/static'
 
 HOST_IP_ADDRESS = os.environ.get('HOST_IP_ADDRESS', '0.0.0.0')
+
+Q_CLUSTER = {
+    'name': 'DJRedis',
+    'workers': 4,
+    'django_redis': 'default'
+}
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 25))
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = bool(os.environ.get('EMAIL_USE_TLS', False))
+EMAIL_USE_SSL = bool(os.environ.get('EMAIL_USE_SSL', False))

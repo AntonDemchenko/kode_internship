@@ -1,7 +1,7 @@
 import uuid
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class User(AbstractUser):
@@ -9,7 +9,11 @@ class User(AbstractUser):
 
     @classmethod
     def create_user(cls, **kwargs):
-        user = User(**kwargs)
+        user = cls(**kwargs)
         user.set_password(user.password)
         user.save()
         return user
+
+    @classmethod
+    def get_by_username(cls, username):
+        return cls.objects.get(username=username)

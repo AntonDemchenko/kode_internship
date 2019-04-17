@@ -3,13 +3,15 @@ import logging
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from base_app.utils.redis import save_pwd, get_pwd
+from base_app.utils.redis import get_pwd, save_pwd
 
 logger = logging.getLogger(__name__)
 
 
 class CredentialsView(APIView):
-    def post(self, request) -> Response:
+
+    @staticmethod
+    def post(request) -> Response:
         data = request.data
         login = data.get('login', None)
         pwd = data.get('password', None)
@@ -29,7 +31,8 @@ class CredentialsView(APIView):
             result=result
         ))
 
-    def get(self, request) -> Response:
+    @staticmethod
+    def get(request) -> Response:
         data = request.data
         login = data.get('login', None)
 
