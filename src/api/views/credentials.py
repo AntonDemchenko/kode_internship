@@ -9,7 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 class CredentialsView(APIView):
-    def post(self, request) -> Response:
+
+    @staticmethod
+    def post(request) -> Response:
         data = request.data
         login = data.get('login', None)
         pwd = data.get('password', None)
@@ -29,7 +31,8 @@ class CredentialsView(APIView):
             result=result
         ))
 
-    def get(self, request) -> Response:
+    @staticmethod
+    def get(request) -> Response:
         data = request.data
         login = data.get('login', None)
 

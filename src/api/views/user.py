@@ -44,7 +44,8 @@ class UserSearch(APIView):
     authentication_classes = (JWTTokenUserAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
+    @staticmethod
+    def get(request):
         username = request.query_params.get('username')
 
         if not username:

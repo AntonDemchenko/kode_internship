@@ -4,7 +4,9 @@ from rest_framework.views import APIView
 
 
 class PublicKeyView(APIView):
-    def get(self, request):
+
+    @staticmethod
+    def get(request):
         return Response({
             'pubkey': settings.PUBLIC_KEY
         })
