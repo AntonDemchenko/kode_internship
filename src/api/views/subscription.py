@@ -28,8 +28,7 @@ class OutgoingSubscriptionList(APIView):
         request.data['owner'] = user_id
         serializer = SubscriptionSerializer(data=request.data)
         if serializer.is_valid():
-            subscription = serializer.save()
-            subscription.notice()
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
