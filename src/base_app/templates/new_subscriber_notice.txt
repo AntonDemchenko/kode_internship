@@ -1,0 +1,1 @@
+User {{ subscriber.username }} is subscribed to you.
