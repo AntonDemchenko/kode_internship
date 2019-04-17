@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_q',
     'rest_framework',
     'base_app',
     'api'
@@ -215,3 +216,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/var/static'
 
 HOST_IP_ADDRESS = os.environ.get('HOST_IP_ADDRESS', '0.0.0.0')
+
+Q_CLUSTER = {
+    'name': 'DJRedis',
+    'workers': 4,
+    'django_redis': 'default'
+}

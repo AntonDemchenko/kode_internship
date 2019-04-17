@@ -6,3 +6,4 @@ redis==3.2.1
 django_redis==4.10.0
 djangorestframework-simplejwt==4.2.0
 cryptography==2.6.1
+django-q-1.0.1
