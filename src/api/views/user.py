@@ -19,6 +19,13 @@ class ReadForAuthenticated(BasePermission):
         return IsAuthenticated().has_permission(request, view)
 
 
+class IsOwnerOrReadOnly(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS:
+            return True
+        return request.user.id == obj.user_id
+
+
 class UserList(generics.ListCreateAPIView):
     authentication_classes = (JWTTokenUserAuthentication,)
     permission_classes = (ReadForAuthenticated,)
@@ -27,6 +34,8 @@ class UserList(generics.ListCreateAPIView):
 
 
 class UserDetail(generics.RetrieveDestroyAPIView):
+    authentication_classes = (JWTTokenUserAuthentication,)
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
