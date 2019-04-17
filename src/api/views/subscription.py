@@ -34,10 +34,10 @@ class OutgoingSubscriptionList(APIView):
 
     @staticmethod
     def delete(request, user_id):
-        target_id = request.query_params.get('target_id')
+        target_id = request.query_params.get('target')
         if not target_id:
             return Response(
-                {'error': 'Missing target_id query parameter.'},
+                {'error': 'Missing target query parameter.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         try:
