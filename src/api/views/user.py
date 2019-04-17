@@ -1,7 +1,7 @@
 import logging
 
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
@@ -12,7 +12,16 @@ from base_app.serializers import UserSerializer
 logger = logging.getLogger(__name__)
 
 
+class ReadForAuthenticated(BasePermission):
+    def has_permission(self, request, view):
+        if request.method not in SAFE_METHODS:
+            return True
+        return IsAuthenticated().has_permission(request, view)
+
+
 class UserList(generics.ListCreateAPIView):
+    authentication_classes = (JWTTokenUserAuthentication,)
+    permission_classes = (ReadForAuthenticated,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
