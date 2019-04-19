@@ -15,3 +15,7 @@ class Pitt(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    @classmethod
+    def get_by_user_id(cls, user_id):
+        return cls.objects.filter(user__user_id=user_id).all()
