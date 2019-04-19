@@ -1,12 +1,16 @@
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 
 from base_app.models import Pitt
 from base_app.serializers import PittSerializer
 
 
 class PittList(APIView):
+    authentication_classes = (JWTTokenUserAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     @staticmethod
     def get(request, user_id):
@@ -16,8 +20,9 @@ class PittList(APIView):
 
     @staticmethod
     def post(request, user_id):
-        request['user'] = user_id
-        serializer = PittSerializer(data=request.data)
+        data = dict(user=user_id)
+        data.update(request.data)
+        serializer = PittSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
