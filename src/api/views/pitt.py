@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.paginator import Paginator
 from rest_framework import status
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 from rest_framework.response import Response
@@ -21,7 +23,10 @@ class PittList(APIView):
 
     @staticmethod
     def get(request, user_id):
-        pitts = Pitt.get_by_user_id(user_id)
+        all_pitts = Pitt.get_by_user_id(user_id)
+        paginator = Paginator(all_pitts, settings.ITEMS_PER_PAGE)
+        page = request.query_params.get('page')
+        pitts = paginator.get_page(page)
         serializer = PittSerializer(pitts, many=True)
         return Response(serializer.data)
 
