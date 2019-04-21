@@ -27,6 +27,14 @@ class Pitt(models.Model):
     def get_by_id(cls, pitt_id):
         return cls.objects.get(pitt_id=pitt_id)
 
+    @classmethod
+    def get_feed(cls, user_id):
+        feed = cls.objects.raw(f"""
+            SELECT P.* FROM base_app_pitt AS P
+            JOIN base_app_subscription AS S ON (P.user_id = S.target_id)
+            WHERE S.owner_id = '{user_id}' ORDER BY P.created_at DESC""")
+        return list(feed)
+
 
 def send_out_notices(pitt):
     context = dict(pitt=pitt)
