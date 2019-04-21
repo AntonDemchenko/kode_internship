@@ -26,3 +26,21 @@ class PittList(APIView):
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+    @staticmethod
+    def delete(request, user_id):
+        pitt_id = request.query_params.get('pitt')
+        if not pitt_id:
+            return Response(
+                {'error': 'Missing pitt query parameter.'},
+                status.HTTP_400_BAD_REQUEST
+            )
+        try:
+            pitt = Pitt.get_by_id(pitt_id)
+        except Pitt.DoesNotExist:
+            return Response(
+                {'error': 'Not found.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        pitt.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
