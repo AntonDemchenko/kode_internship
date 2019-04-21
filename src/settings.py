@@ -215,7 +215,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = '/var/static'
 
-MEDIA_ROOT = '/var/media'
+MEDIA_ROOT = 'var/media'
 
 HOST_IP_ADDRESS = os.environ.get('HOST_IP_ADDRESS', '0.0.0.0')
 

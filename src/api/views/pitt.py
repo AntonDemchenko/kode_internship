@@ -1,3 +1,4 @@
+from django.core.files.base import ContentFile
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -20,9 +21,12 @@ class PittList(APIView):
 
     @staticmethod
     def post(request, user_id):
-        data = dict(user=user_id)
-        data.update(request.data)
-        serializer = PittSerializer(data=data)
+        request.data['user'] = user_id
+        audio = request.data.get('audio')
+        if audio:
+            file = ContentFile(audio, 'audio')
+            request.data['audio'] = file
+        serializer = PittSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)

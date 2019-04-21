@@ -14,4 +14,3 @@ urlpatterns = [
     path('login', TokenObtainPairView.as_view(), name='login'),
     path('pubkey', views.PublicKeyView.as_view(), name='public key'),
 ]
-

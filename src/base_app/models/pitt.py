@@ -6,7 +6,7 @@ from .user import User
 
 
 def user_directory_path(instance, filename):
-    return 'user_{}/{}'.format(instance.user.id, filename)
+    return 'user_{}/{}'.format(instance.user.user_id, instance.pitt_id)
 
 
 class Pitt(models.Model):
