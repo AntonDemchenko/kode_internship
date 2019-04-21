@@ -1,0 +1,2 @@
+User {{pitt.user.username}} published new pitt:
+"{{pitt.text}}"

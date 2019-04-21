@@ -215,6 +215,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = '/var/static'
 
+MEDIA_ROOT = 'var/media'
+
 HOST_IP_ADDRESS = os.environ.get('HOST_IP_ADDRESS', '0.0.0.0')
 
 Q_CLUSTER = {
@@ -229,3 +231,5 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = bool(os.environ.get('EMAIL_USE_TLS', False))
 EMAIL_USE_SSL = bool(os.environ.get('EMAIL_USE_SSL', False))
+
+ITEMS_PER_PAGE = 25

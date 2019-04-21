@@ -1,12 +1,10 @@
 import uuid
 
-from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.template import loader
-from django_q.tasks import async_task
 
+from base_app.utils.email import render_template, send_email
 from .user import User
 
 NEW_SUBSCRIBER_NOTICE_TITLE_PATH = 'new_subscriber_notice_title.txt'
@@ -32,21 +30,6 @@ class Subscription(models.Model):
     @classmethod
     def get(cls, owner_id, target_id):
         return cls.objects.get(owner__user_id=owner_id, target__user_id=target_id)
-
-
-def render_template(template_path: str, context: dict) -> str:
-    template = loader.get_template(template_path)
-    return template.render(context)
-
-
-def send_email(title: str, message: str, to: str) -> None:
-    async_task(
-        'django.core.mail.send_mail',
-        title,
-        message,
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[to]
-    )
 
 
 @receiver(pre_save, sender=Subscription)

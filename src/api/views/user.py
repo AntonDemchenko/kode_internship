@@ -29,7 +29,7 @@ class IsOwnerOrReadOnly(BasePermission):
 class UserList(generics.ListCreateAPIView):
     authentication_classes = (JWTTokenUserAuthentication,)
     permission_classes = (ReadForAuthenticated,)
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by('username')
     serializer_class = UserSerializer
 
 
