@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.paginator import Paginator
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
@@ -11,6 +13,9 @@ class FeedView(APIView):
 
     @staticmethod
     def get(request):
-        feed = Pitt.get_feed(request.user.id)
+        all_feed = Pitt.get_feed(request.user.id)
+        paginator = Paginator(all_feed, settings.ITEMS_PER_PAGE)
+        page = request.query_params.get('page')
+        feed = paginator.get_page(page)
         serializer = PittSerializer(feed, many=True)
         return Response(serializer.data)
