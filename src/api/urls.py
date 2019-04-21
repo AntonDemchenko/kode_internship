@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import (
 
 from . import views
 urlpatterns = [
+    path('feed', views.FeedView.as_view(), name='feed'),
     path('users', views.UserList.as_view(), name='user list'),
     path('users/search', views.UserSearch.as_view(), name='user search'),
     path('users/<str:pk>', views.UserDetail.as_view(), name='user details'),
