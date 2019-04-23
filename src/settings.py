@@ -3,7 +3,9 @@ import os
 import sys
 from datetime import timedelta
 
+import sentry_sdk
 from dotenv import load_dotenv
+from sentry_sdk.integrations.django import DjangoIntegration
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -46,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'base_app.middleware.sentry.SentryMiddleware',
 ]
 
 DATABASES = {
@@ -234,3 +237,8 @@ EMAIL_USE_TLS = bool(os.environ.get('EMAIL_USE_TLS', False))
 EMAIL_USE_SSL = bool(os.environ.get('EMAIL_USE_SSL', False))
 
 ITEMS_PER_PAGE = 25
+
+sentry_sdk.init(
+    dsn=os.environ.get('SENTRY_DSN'),
+    integrations=[DjangoIntegration()]
+)
