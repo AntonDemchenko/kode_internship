@@ -9,5 +9,5 @@ class PittSerializer(serializers.ModelSerializer):
         fields = ('pitt_id', 'text', 'audio', 'created_at', 'user')
         extra_kwargs = {
             'pitt_id': {'read_only': True},
-            'created_id': {'created_at': True}
+            'created_id': {'read_only': True}
         }
