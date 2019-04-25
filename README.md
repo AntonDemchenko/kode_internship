@@ -12,7 +12,7 @@
 1. Создать окружение c Python 3.7, активировать его
 2. Установить python-зависимости из `config/requirements.txt` (`pip install -r config/requirements.txt`)
 3. Установить базу данных: `make local-up`
-4. Перейти в папку `base_app`
+4. Перейти в папку `src`
 4. Выполнить миграции: `python manage.py migrate`
 5. Добавить переменные окружения (их можно сложить в файл `.env`)
 6. В отдельной консоли запустить распределенную очередь заданий django-q: `python manage.py qcluster`
